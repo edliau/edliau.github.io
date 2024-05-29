@@ -14,9 +14,9 @@
 </head>
 <body class="bg-yellow-50 text-gray-900 flex flex-col items-center justify-center min-h-screen">
     <!-- Fixed position header -->
-    <header class="fixed top-0 left-0 right-0 p-1 pl-5">
+    <header class="fixed top-0 left-0 right-0 p-1 pl-5 bg-yellow-50">
         <nav class="flex justify-normal space-x-4">
-            <a href="about.html" class="text-gray-600 hover:text-gray-900">about</a>
+            <a href="#about" class="text-gray-600 hover:text-gray-900">about</a>
             <a href="projects.html" class="text-gray-600 hover:text-gray-900">projects</a>
             <a href="#" class="text-gray-600 hover:text-gray-900">contact me</a>
         </nav>
@@ -30,20 +30,33 @@
             <h2 class="text-3xl ml-2">let's get in touch!</h2>
         </section>
     </main>
-    <div class="p-4">
-        <section class="mb-4">
-            <h2 class="text-2xl font-semibold mb-2">Additional Content</h2>
-            <p class="text-lg">Scroll down to see more content...</p>
+    <div class="p-4 w-1/2 items-center pb-50">
+        <section id="about" class="mb-4 flex items-center fade-section space-x-4 pb-5">
+            <div class="w-64 h-64">
+                <img src="./assets/profile.jpg" class="w-64 h-64 rounded-full object-cover">
+            </div>
+            <div class="max-w-md">
+                <h1 class="text-3xl font-semibold mb-2">get to know me</h1>
+                <p class="text-lg text-wrap">Hello! My name is Edward, a rising senior in Yale-NUS College.
+                    I'm majoring in Mathematical, Computational, and Statistical Sciences,
+                    with a focus in Computer Science.
+                </p>
+            </div>
         </section>
-        <section class="mb-4">
+        <p class="text-lg text-wrap text-left fade-section">
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        </p>
+    </div>
+    <div>
+        <section id="projects" class="mb-4 fade-section text-center">
             <h2 class="text-2xl font-semibold mb-2">Features</h2>
-            <ul class="list-disc list-inside">
+            <ul class="list-disc list-inside mx-auto">
                 <li>Easy to set up</li>
                 <li>Highly customizable</li>
                 <li>Responsive design</li>
             </ul>
         </section>
-        <section>
+        <section id="contact">
             <h2 class="text-2xl font-semibold mb-2">Contact</h2>
             <form class="bg-white p-4 shadow rounded">
                 <div class="mb-4">
@@ -60,12 +73,14 @@
     </div>
 
     <!-- Include the typingEffect.js file -->
+    <script defer src="./scripts/fade.js"></script>
     <script src="./scripts/typing.js"></script>
     <script>
         // Call the typingEffect function with the appropriate selector and words array
         typingEffect('.typing-text', ["UI/UX enthusiast.", "contract bridge player.", "Golden State Warriors fan.", 
         "prospective developer.", "boygenius stan.", "part-time barista.", "hip-hop enjoyer.", "thrift store lover.",
-        "coffee addict.", "video game fanatic.", "learning designer.", "mythology nerd.", "website maker."]);
+        "coffee addict.", "video game fanatic.", "learning designer.", "mythology nerd.", "website maker.",
+        "collector of cute things.","musical admirer"]);
     </script>
 </body>
 </html>
