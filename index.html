@@ -3,34 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tailwind CSS Project</title>
+    <title>edward liau</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Prata&display=swap" rel="stylesheet">
-    <style>
-        .typing-text {
-            white-space: nowrap; /* Prevent text from wrapping */
-            overflow: hidden; /* Hide overflow */
-            border-right: 2px solid black; /* Simulate typing cursor */
-        }
-        body {
-        font-family: 'Prata', serif; /* Apply Prata font to the entire document */
-        }
-        
-        .heading-font {
-            font-family: 'Prata', serif; /* Apply Prata font to specific elements */
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Serif+Text:ital@0;1&display=swap" rel="stylesheet">
+    <link href="./css/styles.css" rel="stylesheet">
 </head>
-<body class="bg-gray-100 text-gray-900">
-    <header class="bg-blue-600 p-4 text-white">
-        <h1 class="text-3xl font-bold">My Tailwind CSS Project</h1>
+<body class="bg-gray-100 text-gray-900 flex flex-col items-center justify-center min-h-screen">
+    <!-- Fixed position header -->
+    <header class="fixed top-0 left-0 right-0 p-1 pl-5">
+        <nav class="flex justify-normal space-x-4">
+            <a href="#" class="text-gray-600 hover:text-gray-900">about</a>
+            <a href="#" class="text-gray-600 hover:text-gray-900">projects</a>
+            <a href="#" class="text-gray-600 hover:text-gray-900">contact me</a>
+        </nav>
     </header>
-    <main class="p-4">
+
+    <main class="flex flex-col items-start justify-center min-h-screen p-4">
+        <section class="mb-4 text-left">
+            <h1 class="text-7xl font-bold ml-2">Hello.</h1>
+            <h2 class="text-3xl ml-2">my name's Edward, and I'm a</h2>
+            <h2 class="text-3xl w-1000 whitespace-pre"><span class="typing-container"> <span class="typing-text"></span></span></h2>
+            <h2 class="text-3xl ml-2">let's get in touch!</h2>
+        </section>
+    </main>
+    <div class="p-4">
         <section class="mb-4">
-            <h2 class="text-2xl font-semibold mb-2">Welcome</h2>
-            <p class="text-lg">This is a simple static HTML project styled with Tailwind CSS.</p>
+            <h2 class="text-2xl font-semibold mb-2">Additional Content</h2>
+            <p class="text-lg">Scroll down to see more content...</p>
         </section>
         <section class="mb-4">
             <h2 class="text-2xl font-semibold mb-2">Features</h2>
@@ -54,19 +56,15 @@
                 <button type="submit" class="bg-blue-600 text-white py-2 px-4 rounded">Submit</button>
             </form>
         </section>
-        <!-- Text to apply typing effect -->
-        <p class="typing-text text-lg">This is a text typing effect example using JavaScript.</p>
-    </main>
-    <footer class="bg-gray-800 text-white p-4 text-center">
-        &copy; 2024 My Tailwind CSS Project
-    </footer>
+    </div>
 
     <!-- Include the typingEffect.js file -->
     <script src="./scripts/typing.js"></script>
-
     <script>
         // Call the typingEffect function with the appropriate selector and words array
-        typingEffect('.typing-text', ["Test1", "Test2", "Test3"]);
+        typingEffect('.typing-text', ["UI/UX enthusiast.", "contract bridge player.", "Golden State Warriors fan.", 
+        "prospective developer.", "boygenius stan.", "part-time barista.", "hip-hop enjoyer.", "thrift store lover.",
+        "coffee addict.", "video game fanatic.", "learning designer.", "mythology nerd.", "website maker."]);
     </script>
 </body>
 </html>
