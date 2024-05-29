@@ -5,9 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tailwind CSS Project</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link href="/css/styles.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prata&display=swap" rel="stylesheet">
+    <style>
+        .typing-text {
+            white-space: nowrap; /* Prevent text from wrapping */
+            overflow: hidden; /* Hide overflow */
+            border-right: 2px solid black; /* Simulate typing cursor */
+        }
+        body {
+        font-family: 'Prata', serif; /* Apply Prata font to the entire document */
+        }
+        
+        .heading-font {
+            font-family: 'Prata', serif; /* Apply Prata font to specific elements */
+        }
+    </style>
 </head>
-<body class="bg-gray-100 text-gray-900 font-custom">
+<body class="bg-gray-100 text-gray-900">
     <header class="bg-blue-600 p-4 text-white">
         <h1 class="text-3xl font-bold">My Tailwind CSS Project</h1>
     </header>
@@ -38,9 +54,19 @@
                 <button type="submit" class="bg-blue-600 text-white py-2 px-4 rounded">Submit</button>
             </form>
         </section>
+        <!-- Text to apply typing effect -->
+        <p class="typing-text text-lg">This is a text typing effect example using JavaScript.</p>
     </main>
     <footer class="bg-gray-800 text-white p-4 text-center">
         &copy; 2024 My Tailwind CSS Project
     </footer>
+
+    <!-- Include the typingEffect.js file -->
+    <script src="./scripts/typing.js"></script>
+
+    <script>
+        // Call the typingEffect function with the appropriate selector and words array
+        typingEffect('.typing-text', ["Test1", "Test2", "Test3"]);
+    </script>
 </body>
 </html>
