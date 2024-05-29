@@ -1,8 +1,8 @@
 /* styles.css */
 @font-face {
     font-family: 'JUSTSansRegular';
-    src: url('/fonts/JUSTSansRegular.woff') format('woff'),
-         url('/fonts/JUSTSansRegular.otf') format('otf');
+    src: url('./fonts/JUSTSansRegular.woff') format('woff'),
+         url('./fonts/JUSTSansRegular.otf') format('otf');
     font-style: normal;
   }
   
