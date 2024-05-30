@@ -58,3 +58,34 @@ body {
      filter: blur(0);
      transform: translateX(0);
  }
+
+ .image-container {
+     position: relative;
+     overflow: hidden;
+ }
+ 
+ .image-container img {
+     position: absolute;
+     top: 0;
+     left: 0;
+     opacity: 0;
+     filter: blur(5px);
+     transform: translateX(100%); /* Initially, set translateX to 100% to move images out of view */
+     transition: all 1.2s;
+ }
+ 
+ .image-container img.active {
+     opacity: 1;
+     filter: blur(0);
+     transform: translateX(0); /* Keep translateX at 0 for the active image */
+ }
+ 
+ .image-container img.fade-out {
+     transform: translateX(-100%); /* Transition out to the left side of the screen */
+ }
+ 
+ .image-container img.fade-in {
+     transform: translateX(calc(0% - var(--offset))); /* Transition in to the original position */
+ }
+ 
+ 

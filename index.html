@@ -10,77 +10,93 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Serif+Text:ital@0;1&display=swap" rel="stylesheet">
     <link href="./css/styles.css" rel="stylesheet">
-    <link rel="shortcut icon" type="image/x-icon" href="./assets/favicon.ico" />
+    <link rel="shortcut icon" type="image/x-icon" href="./assets/images/favicon.ico" />
 </head>
 <body class="bg-yellow-50 text-gray-900 flex flex-col items-center justify-center min-h-screen">
     <!-- Fixed position header -->
-    <header class="fixed top-0 left-0 right-0 p-1 pl-5 bg-yellow-50">
-        <nav class="flex justify-normal space-x-4">
-            <a href="#about" class="text-gray-600 hover:text-gray-900">about</a>
-            <a href="projects.html" class="text-gray-600 hover:text-gray-900">projects</a>
-            <a href="#" class="text-gray-600 hover:text-gray-900">contact me</a>
+    <header class="fixed top-0 left-0 right-0 p-1 pl-0 bg-yellow-50 z-50">
+        <nav class="flex justify-between w-full px-5">
+            <!-- Left side navigation -->
+            <div class="flex space-x-4">
+                <a href="#about" class="text-gray-600 hover:text-gray-900">about</a>
+                <a href="#projects" class="text-gray-600 hover:text-gray-900">projects</a>
+                <a href="#contact" class="text-gray-600 hover:text-gray-900">contact me</a>
+            </div>
+            <!-- Right side navigation -->
+            <div class="flex space-x-4">
+                <a href="#" id="scrollToTop" class="text-gray-600 hover:text-gray-900">back to top</a>
+            </div>
         </nav>
     </header>
-
     <main class="flex flex-col items-start justify-center min-h-screen p-4">
-        <section class="mb-4 text-left">
+        <section id ="top" class="mb-4 text-left">
             <h1 class="text-7xl font-bold ml-2">Hello.</h1>
             <h2 class="text-3xl ml-2">my name's Edward, and I'm a</h2>
             <h2 class="text-3xl w-1000 whitespace-pre ml0.5"><span class="typing-container"> <span class="typing-text"></span></span></h2>
             <h2 class="text-3xl ml-2">let's get in touch!</h2>
         </section>
     </main>
-    <div class="p-4 w-1/2 items-center pb-50">
-        <section id="about" class="mb-4 flex items-center fade-section space-x-4 pb-5">
-            <div class="w-64 h-64">
-                <img src="./assets/profile.jpg" class="w-64 h-64 rounded-full object-cover">
+    <div class="p-4 w-3/4 flex flex-col items-center pb-24 min-h-screen pt-50">
+        <section id="about" class="mb-4 flex flex-col items-center pb-5 w-full">
+            <div class="flex flex-col sm:flex-row items-center w-full mb-4 fade-section">
+                <div class="w-full sm:w-1/2 flex justify-center mb-4">
+                    <img src="./assets/images/profile.jpg" class="rounded-full object-cover w-48 h-48 sm:w-1/2 sm:h-1/2">
+                </div>
+                <div class="w-full sm:w-1/2 sm:text-left text-center">
+                    <h1 class="text-6xl font-semibold mb-2 pb-3">get to know me.</h1>
+                    <p class="text-lg">Hello! I'm a rising senior in Yale-NUS College, majoring in Mathematical, Computational, and Statistical Sciences, with a focus in Computer Science. 
+                        I love all things design related, and hope to build intuitive human-centric web apps.</p>
+                </div>
             </div>
-            <div class="max-w-md">
-                <h1 class="text-3xl font-semibold mb-2">get to know me</h1>
-                <p class="text-lg text-wrap">Hello! My name is Edward, a rising senior in Yale-NUS College.
-                    I'm majoring in Mathematical, Computational, and Statistical Sciences,
-                    with a focus in Computer Science.
-                </p>
+            <div class="w-screen sm:w-11/12 flex flex-col items-center justify-center pt-3 h-full fade-section">
+                <div class="sm:w-full w-3/4 flex flex-wrap flex-row items-center space-x-3 text-lg pb-6">
+                    <p class="text-lg">recently, I've...</p>
+                    <a href="#" data-image="image1" class="hover:text-gray-600">been on exchange at Yale</a>
+                    <a href="#" data-image="image2" class="hover:text-gray-600">trekked across Shikoku</a>
+                    <a href="#" data-image="image3" class="hover:text-gray-600">watched a cat be fostered</a>
+                    <a href="#" data-image="image4" class="hover:text-gray-600">tried out lighting tech</a>
+                </div>
+                <div class="w-3/4 relative flex justify-center items-center image-container sm:w-1/2 h-80 rounded-md">
+                    <img src="./assets/images/yale.jpg" id="image1" class="h-full w-full object-cover rounded-md active">
+                    <img src="./assets/images/japan.jpg" id="image2" class="h-full w-full object-cover rounded-md">
+                    <img src="./assets/images/cat.jpg" id="image3" class="h-full w-full object-cover rounded-md">
+                    <img src="./assets/images/tapedays.jpg" id="image4" class="h-full w-full object-cover rounded-md">
+                </div>
             </div>
         </section>
-        <p class="text-lg text-wrap text-left fade-section">
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-        </p>
     </div>
-    <div>
-        <section id="projects" class="mb-4 fade-section text-center">
-            <h2 class="text-2xl font-semibold mb-2">Features</h2>
-            <ul class="list-disc list-inside mx-auto">
-                <li>Easy to set up</li>
-                <li>Highly customizable</li>
-                <li>Responsive design</li>
+    
+    <div class="min-h-screen">
+        <section id="projects" class="mb-4 fade-section text-left align-middle w-1/2">
+            <h1 class="text-6xl font-semibold mb-2 pb-3">projects.</h1>
+            <p class="text-lg pt-3">
+                I make functional products which are inspired by my communities and try to make their lives easier.
+            </p>
+            <ul class="list-item list-inside mx-auto text-lg pt-6">
+                <li>Stu the Stuorg Bot</li>
+                <li>yuttle-imp</li>
+                <li>ya-leh-nus generator (wip!)</li>
             </ul>
         </section>
-        <section id="contact">
-            <h2 class="text-2xl font-semibold mb-2">Contact</h2>
-            <form class="bg-white p-4 shadow rounded">
-                <div class="mb-4">
-                    <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
-                    <input type="text" id="name" name="name" class="mt-1 block w-full p-2 border border-gray-300 rounded">
-                </div>
-                <div class="mb-4">
-                    <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-                    <input type="email" id="email" name="email" class="mt-1 block w-full p-2 border border-gray-300 rounded">
-                </div>
-                <button type="submit" class="bg-blue-600 text-white py-2 px-4 rounded">Submit</button>
-            </form>
+    </div>
+    <div class="min-h-screen">
+        <section id="contact" class="mb-4 fade-section text-left">
+            <h2 class="text-4xl font-semibold mb-2">get in touch with me!</h2>
+            <p></p>
         </section>
     </div>
 
     <!-- Include the typingEffect.js file -->
     <script defer src="./scripts/fade.js"></script>
+    <script defer src="./scripts/scroll.js"></script>
+    <script defer src="./scripts/hover-image.js"></script>
     <script src="./scripts/typing.js"></script>
     <script>
         // Call the typingEffect function with the appropriate selector and words array
         typingEffect('.typing-text', ["UI/UX enthusiast.", "contract bridge player.", "Golden State Warriors fan.", 
         "prospective developer.", "boygenius stan.", "part-time barista.", "hip-hop enjoyer.", "thrift store lover.",
         "coffee addict.", "video game fanatic.", "learning designer.", "mythology nerd.", "website maker.",
-        "collector of cute things.","musical admirer"]);
+        "collector of cute things.","musical admirer."]);
     </script>
 </body>
 </html>
