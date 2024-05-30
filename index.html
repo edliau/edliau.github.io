@@ -28,12 +28,15 @@
             </div>
         </nav>
     </header>
+    <footer class="fixed">
+
+    </footer>
     <main class="flex flex-col items-start justify-center min-h-screen p-4">
         <section id ="top" class="mb-4 text-left">
             <h1 class="text-7xl font-bold ml-2">Hello.</h1>
             <h2 class="text-3xl ml-2">my name's Edward, and I'm a</h2>
             <h2 class="text-3xl w-1000 whitespace-pre ml0.5"><span class="typing-container"> <span class="typing-text"></span></span></h2>
-            <h2 class="text-3xl ml-2">let's get in touch!</h2>
+            <h2 class="text-3xl ml-2">check out my stuff below!</h2>
         </section>
     </main>
     <div class="p-4 w-3/4 flex flex-col items-center pb-24 min-h-screen pt-50">
@@ -43,20 +46,20 @@
                     <img src="./assets/images/profile.jpg" class="rounded-full object-cover w-48 h-48 sm:w-1/2 sm:h-1/2">
                 </div>
                 <div class="w-full sm:w-1/2 sm:text-left text-center">
-                    <h1 class="text-6xl font-semibold mb-2 pb-3">get to know me.</h1>
+                    <h1 class="text-6xl font-semibold mb-2 pb-3">about me.</h1>
                     <p class="text-lg">Hello! I'm a rising senior in Yale-NUS College, majoring in Mathematical, Computational, and Statistical Sciences, with a focus in Computer Science. 
                         I love all things design related, and hope to build intuitive human-centric web apps.</p>
                 </div>
             </div>
-            <div class="w-screen sm:w-11/12 flex flex-col items-center justify-center pt-3 h-full fade-section">
-                <div class="sm:w-full w-3/4 flex flex-wrap flex-row items-center space-x-3 text-lg pb-6">
+            <div class="w-full sm:w-11/12 flex flex-col items-center justify-center pt-3 h-full fade-section">
+                <div class="sm:w-full w-3/4 flex flex-wrap flex-row items-center sm:space-x-3 space-x-0 sm:text-left text-center text-lg pb-6">
                     <p class="text-lg">recently, I've...</p>
                     <a href="#" data-image="image1" class="hover:text-gray-600">been on exchange at Yale</a>
                     <a href="#" data-image="image2" class="hover:text-gray-600">trekked across Shikoku</a>
                     <a href="#" data-image="image3" class="hover:text-gray-600">watched a cat be fostered</a>
                     <a href="#" data-image="image4" class="hover:text-gray-600">tried out lighting tech</a>
                 </div>
-                <div class="w-3/4 relative flex justify-center items-center image-container sm:w-1/2 h-80 rounded-md">
+                <div class="w-full relative flex justify-center items-center image-container sm:w-1/2 h-80 rounded-md">
                     <img src="./assets/images/yale.jpg" id="image1" class="h-full w-full object-cover rounded-md active">
                     <img src="./assets/images/japan.jpg" id="image2" class="h-full w-full object-cover rounded-md">
                     <img src="./assets/images/cat.jpg" id="image3" class="h-full w-full object-cover rounded-md">
@@ -66,23 +69,68 @@
         </section>
     </div>
     
-    <div class="min-h-screen">
-        <section id="projects" class="mb-4 fade-section text-left align-middle w-1/2">
-            <h1 class="text-6xl font-semibold mb-2 pb-3">projects.</h1>
-            <p class="text-lg pt-3">
-                I make functional products which are inspired by my communities and try to make their lives easier.
-            </p>
-            <ul class="list-item list-inside mx-auto text-lg pt-6">
-                <li>Stu the Stuorg Bot</li>
-                <li>yuttle-imp</li>
-                <li>ya-leh-nus generator (wip!)</li>
-            </ul>
+    <div class="p-4 w-3/4 flex flex-col items-center pb-24 min-h-screen pt-50">
+        <section id="projects" class="mb-4 fade-section w-full sm:w-1/2 sm:text-left text-center">
+          <h1 class="text-6xl font-semibold mb-2 pb-3">projects.</h1>
+          <p class="text-lg pt-3">
+            I make functional products which are inspired by my communities and try to make their lives easier, or just
+            a little more fun. Click on any of the projects below to find our more about them!
+          </p>
+          <ul class="list-item list-inside mx-auto text-3xl font-semibold pt-6">
+            <li onclick="toggleContent('stuorg-bot')">Stu the Stuorg Bot</li>
+            <div id="stuorg-bot-content" class="expanded-content text-lg font-normal">
+                <div class="content-container">
+                <p>Stu is a Telegram bot designed and implemented by me in Python for Yale-NUS' Student Affairs Office.
+                    It's used by students to answer FAQs, make classroom booking requests, and check for upcoming events.
+                    Try out using Stu <a href="https://t.me/YNCStuorgsBot"><u>here</u></a>.
+                </p>
+             </div>
+            </div>
+            <li onclick="toggleContent('yuttle-imp')">yuttle-imp</li>
+            <div id="yuttle-imp-content" class="expanded-content text-lg font-normal">
+                <div class="content-container">
+                <p>This app was built as part of Yale's CPSC419 Full Stack Web Programming module, improving
+                    the lackluster Yale Shuttle app to be more user-friendly. I designed the app's database,
+                    and implemented the algorithms for route finding and visualisation. You can check out 
+                    the project repository <a href="https://github.com/edliau/yaleshuttle-imp"><u>here</u></a>.
+                </p>
+             </div>
+            </div>
+            <li onclick="toggleContent('generator')">ya-leh-nus generator (wip!)</li>
+            <div id="generator-content" class="expanded-content text-lg font-normal">
+            <div class="content-container">
+                <p>inspired by Christopher Strachey's generator of love letters, and Jean Wang's
+                    <a href="https://jingyingwang.github.io/yaliesbio/"><u>yalies.bio</u></a>, this is my
+                    love letter to Yale-NUS' closure, and a fun way to remember what made Yale-NUS students
+                    so special. You can have fun with it <a href="#"><u>here</u></a>!
+                </p>
+            </div>
+            </div>
+          </ul>
         </section>
-    </div>
-    <div class="min-h-screen">
-        <section id="contact" class="mb-4 fade-section text-left">
-            <h2 class="text-4xl font-semibold mb-2">get in touch with me!</h2>
-            <p></p>
+      </div>
+
+      <div class="p-4 w-3/4 flex flex-col items-center pb-24 pt-35">
+        <section id="contact" class="mb-4 fade-section w-full sm:w-1/2 text-center">
+          <h1 class="text-6xl font-semibold mb-2 pb-3">getting in touch.</h1>
+          <p class="text-lg pt-3">
+            you can find me using:
+          </p>
+          <ul class="list-item list-inside mx-auto text-lg pt-6">
+            <li ><a class="hover:text-gray-400" href="mailto:edward.liau@u.yale-nus.edu.sg">email.</a></li>
+            <li><a class="hover:text-gray-400" href="https://www.instagram.com/edie.wardie/">instagram.</a></li>
+            <li><a class="hover:text-gray-400" href="https://github.com/edliau">github.</a></li>
+            <li><a class="hover:text-gray-400" href="https://t.me/poyoyobing">telegram.</a></li>
+          </ul>
+          <p class="text-lg pt-6">
+            hope to see you around :)
+          </p>
+        </section>
+      </div>
+
+    <div class="items-center w-1/2">
+        <section id="copyright" class="mb-4 w-full text-center">
+            <p class="text-xs font-normal text-gray-400">made by edward © 2024, with images from Thaddeus Ang and Loe Luo</p>
         </section>
     </div>
 
@@ -90,13 +138,14 @@
     <script defer src="./scripts/fade.js"></script>
     <script defer src="./scripts/scroll.js"></script>
     <script defer src="./scripts/hover-image.js"></script>
+    <script defer src="./scripts/dialog.js"></script>
     <script src="./scripts/typing.js"></script>
     <script>
         // Call the typingEffect function with the appropriate selector and words array
         typingEffect('.typing-text', ["UI/UX enthusiast.", "contract bridge player.", "Golden State Warriors fan.", 
         "prospective developer.", "boygenius stan.", "part-time barista.", "hip-hop enjoyer.", "thrift store lover.",
         "coffee addict.", "video game fanatic.", "learning designer.", "mythology nerd.", "website maker.",
-        "collector of cute things.","musical admirer."]);
+        "collector of cute things.","musical admirer.","kuromi obsessor."]);
     </script>
 </body>
 </html>

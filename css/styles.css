@@ -50,7 +50,7 @@ body {
      opacity: 0;
      filter: blur(5px);
      transform: translateX(-100%);
-     transition: all 1s;
+     transition: all 1.3s;
  }
 
  .fade-section.visible {
@@ -84,8 +84,26 @@ body {
      transform: translateX(-100%); /* Transition out to the left side of the screen */
  }
  
- .image-container img.fade-in {
+.image-container img.fade-in {
      transform: translateX(calc(0% - var(--offset))); /* Transition in to the original position */
  }
  
- 
+ .expanded-content {
+     max-height: 0;
+     overflow: hidden;
+     transition: max-height 0.4s ease;
+   }
+
+   .expanded-content.active {
+     max-height: 500px; /* Adjust this value as needed */
+     transition: max-height 0.4s ease;
+   }
+
+   .expanded-content p {
+     margin: 0;
+   }
+
+   .content-container {
+     padding-top: 4px;
+     padding-bottom: 15px; /* Adjust this value as needed */
+   }
