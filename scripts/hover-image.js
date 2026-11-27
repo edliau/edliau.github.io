@@ -2,12 +2,14 @@
 document.addEventListener('DOMContentLoaded', () => {
     const buttons = document.querySelectorAll('.photo-link[data-image]');
     const images = document.querySelectorAll('.photo-stack img');
+    const frame = document.querySelector('.photo-frame');
 
     const show = (button) => {
         const target = document.getElementById(button.dataset.image);
         if (!target || target.classList.contains('is-active')) return;
 
         images.forEach(img => img.classList.toggle('is-active', img === target));
+        if (frame && target.dataset.tilt) frame.style.setProperty('--tilt', `${target.dataset.tilt}deg`);
         buttons.forEach(b => {
             const active = b === button;
             b.classList.toggle('is-active', active);

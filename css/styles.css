@@ -10,6 +10,11 @@
      --ink-faint: #a8a29e;
      --line: rgba(28, 25, 23, 0.12);
      --highlight: rgba(255, 230, 0, 0.55);
+     --marker: rgba(255, 230, 0, 0.45);
+     --paper-glass: rgba(254, 252, 232, 0.85);
+     --card: #fffef8;
+     --shadow: 0 1px 2px rgba(28, 25, 23, 0.06), 0 10px 30px rgba(28, 25, 23, 0.1);
+     color-scheme: light;
 
      --font-display: 'DM Serif Display', Georgia, serif;
      --font-text: 'DM Serif Text', Georgia, serif;
@@ -21,6 +26,46 @@
 
      --header-h: 3.25rem;
      --gutter: clamp(1.25rem, 5vw, 3rem);
+}
+
+/* "lights off": warm dark paper, same highlighter. Applies when chosen, or
+   when the device prefers dark and nothing has been chosen yet. */
+:root[data-theme='dark'] {
+     --paper: #17150f;
+     --ink: #f4efe1;
+     --ink-soft: #bdb5a3;
+     --ink-faint: #7d766a;
+     --line: rgba(244, 239, 225, 0.14);
+     --highlight: rgba(255, 214, 0, 0.34);
+     --marker: rgba(255, 214, 0, 0.4);
+     --paper-glass: rgba(23, 21, 15, 0.82);
+     --card: #24211a;
+     --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 12px 32px rgba(0, 0, 0, 0.45);
+     color-scheme: dark;
+}
+
+@media (prefers-color-scheme: dark) {
+     :root:not([data-theme='light']) {
+          --paper: #17150f;
+          --ink: #f4efe1;
+          --ink-soft: #bdb5a3;
+          --ink-faint: #7d766a;
+          --line: rgba(244, 239, 225, 0.14);
+          --highlight: rgba(255, 214, 0, 0.34);
+          --marker: rgba(255, 214, 0, 0.4);
+          --paper-glass: rgba(23, 21, 15, 0.82);
+          --card: #24211a;
+          --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 12px 32px rgba(0, 0, 0, 0.45);
+          color-scheme: dark;
+     }
+}
+
+/* Only while switching themes, so the house lights fade rather than snap. */
+.theme-fade,
+.theme-fade *,
+.theme-fade *::before,
+.theme-fade *::after {
+     transition: background-color 600ms var(--ease-out), color 600ms var(--ease-out), border-color 600ms var(--ease-out) !important;
 }
 
 /* ------------------------------------------------------------------
@@ -136,7 +181,7 @@ a {
      position: fixed;
      inset: 0 0 auto 0;
      z-index: 50;
-     background: rgba(254, 252, 232, 0.85);
+     background: var(--paper-glass);
      -webkit-backdrop-filter: blur(8px);
      backdrop-filter: blur(8px);
      border-bottom: 1px solid transparent;
@@ -189,6 +234,78 @@ a {
      pointer-events: auto;
 }
 
+.site-nav__actions {
+     display: flex;
+     align-items: center;
+     gap: clamp(0.75rem, 3vw, 1.5rem);
+}
+
+.nav-link__short {
+     display: none;
+}
+
+@media (max-width: 639px) {
+     .nav-link__full,
+     .lights__label {
+          display: none;
+     }
+
+     .nav-link__short {
+          display: inline;
+     }
+}
+
+/* The lights switch: a bulb that glows when the lights are on. */
+.lights {
+     display: inline-flex;
+     align-items: center;
+     gap: 0.4rem;
+     color: var(--ink-soft);
+     padding-block: 0.5rem;
+     transition: color var(--dur-fast);
+}
+
+.lights:hover {
+     color: var(--ink);
+}
+
+.lights svg {
+     transition: transform var(--dur) var(--ease-out);
+}
+
+.lights:hover svg {
+     transform: rotate(-12deg);
+}
+
+.lights__glow {
+     transition: opacity var(--dur) var(--ease-out);
+}
+
+.lights[aria-pressed='true'] .lights__glow {
+     opacity: 0;
+}
+
+.lights[aria-pressed='true'] svg path:first-child {
+     fill: var(--highlight);
+}
+
+/* Reading progress: a highlighter stroke along the bottom of the header. */
+.progress {
+     position: absolute;
+     left: 0;
+     right: 0;
+     bottom: -1px;
+     height: 3px;
+     pointer-events: none;
+}
+
+.progress__bar {
+     height: 100%;
+     background: var(--marker);
+     transform-origin: 0 50%;
+     transform: scaleX(var(--progress, 0));
+}
+
 /* ------------------------------------------------------------------
    Hero
 ------------------------------------------------------------------- */
@@ -218,7 +335,16 @@ a {
 
 .hero__line--typing {
      /* Reserve the line so the layout never jumps while a word types or erases. */
+     position: relative;
      min-height: 1.35em;
+}
+
+.typing-button {
+     cursor: pointer;
+}
+
+.typing-button:active .typing-text {
+     background: var(--marker);
 }
 
 .typing-text {
@@ -374,11 +500,43 @@ a {
      }
 }
 
+/* Scrapbook frame: paper border, a strip of highlighter tape, and a tilt
+   that changes with each photo (set from data-tilt in hover-image.js). */
+.photo-frame {
+     position: relative;
+     padding: 0.6rem 0.6rem 2rem;
+     background: var(--card);
+     box-shadow: var(--shadow);
+     transform: rotate(var(--tilt, 0deg));
+     transition: transform 900ms var(--ease-out);
+}
+
+.js .photo-frame[data-reveal] {
+     transform: translateY(24px) rotate(var(--tilt, 0deg));
+}
+
+.js .photo-frame[data-reveal].is-visible {
+     transform: rotate(var(--tilt, 0deg));
+}
+
+.photo-frame::before {
+     content: '';
+     position: absolute;
+     z-index: 1;
+     top: -0.7rem;
+     left: 50%;
+     width: 6.5rem;
+     height: 1.5rem;
+     background: var(--marker);
+     transform: translateX(-50%) rotate(-3deg);
+     -webkit-mask: linear-gradient(90deg, transparent 0 2px, #000 2px calc(100% - 2px), transparent calc(100% - 2px));
+     mask: linear-gradient(90deg, transparent 0 2px, #000 2px calc(100% - 2px), transparent calc(100% - 2px));
+}
+
 .photo-stack {
      position: relative;
      aspect-ratio: 4 / 3;
      overflow: hidden;
-     border-radius: 6px;
      background: var(--line);
 }
 
@@ -527,6 +685,258 @@ a {
      color: var(--ink-faint);
 }
 
+.cheat-hint {
+     margin-top: 0.5rem;
+     padding-block: 0.5rem;
+     font-size: 0.75rem;
+     letter-spacing: 0.15em;
+     color: var(--ink-faint);
+     opacity: 0.7;
+     transition: opacity var(--dur-fast), color var(--dur-fast);
+}
+
+.cheat-hint:hover,
+.cheat-hint[aria-pressed='true'] {
+     opacity: 1;
+     color: var(--ink-soft);
+}
+
+/* ------------------------------------------------------------------
+   Hero extras: glyphs that drift off each finished word
+------------------------------------------------------------------- */
+.sparks {
+     position: absolute;
+     left: 0;
+     top: 0;
+     pointer-events: none;
+}
+
+.spark {
+     position: absolute;
+     left: var(--x);
+     top: 0.2em;
+     font-family: var(--font-display);
+     font-size: 0.55em;
+     white-space: nowrap;
+     color: var(--ink-soft);
+     opacity: 0;
+     animation: spark 1.6s var(--ease-out) forwards;
+}
+
+@keyframes spark {
+     0% {
+          opacity: 0;
+          transform: translate(0, 0) rotate(0deg) scale(0.6);
+     }
+     20% {
+          opacity: 1;
+     }
+     100% {
+          opacity: 0;
+          transform: translate(var(--dx), var(--dy)) rotate(var(--r)) scale(1);
+     }
+}
+
+/* ------------------------------------------------------------------
+   Interest band between the hero and about
+------------------------------------------------------------------- */
+.marquee {
+     overflow: hidden;
+     border-block: 1px solid var(--line);
+     padding-block: 0.9rem;
+     -webkit-mask: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+     mask: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
+.marquee__track {
+     display: flex;
+     width: max-content;
+     animation: marquee 70s linear infinite;
+}
+
+.marquee:hover .marquee__track {
+     animation-play-state: paused;
+}
+
+.marquee__run {
+     display: flex;
+}
+
+.marquee__item {
+     font-family: var(--font-display);
+     font-style: italic;
+     font-size: clamp(1.25rem, 3vw, 1.75rem);
+     color: var(--ink-soft);
+     white-space: nowrap;
+     padding-inline: 1.25rem;
+}
+
+.marquee__item::after {
+     content: '✦';
+     font-style: normal;
+     font-size: 0.6em;
+     color: var(--ink-faint);
+     margin-left: 2.5rem;
+     vertical-align: 0.2em;
+}
+
+@keyframes marquee {
+     to {
+          transform: translateX(-50%);
+     }
+}
+
+/* ------------------------------------------------------------------
+   Bridge hand
+------------------------------------------------------------------- */
+.hand {
+     margin-top: 2.5rem;
+}
+
+.hand__suits {
+     display: grid;
+     gap: 0.75rem;
+}
+
+.suit-row {
+     display: flex;
+     align-items: center;
+     gap: 1rem;
+     min-height: 3.25rem;
+}
+
+.suit-row__symbol {
+     flex: none;
+     width: 1.5rem;
+     font-size: 1.6rem;
+     line-height: 1;
+     text-align: center;
+}
+
+.suit-row__cards {
+     display: flex;
+     flex-wrap: wrap;
+     gap: 0.4rem;
+     min-width: 0;
+}
+
+.card {
+     display: inline-grid;
+     place-items: center;
+     min-width: 2.25rem;
+     height: 3.1rem;
+     padding-inline: 0.35rem;
+     font-family: var(--font-display);
+     font-size: 1.35rem;
+     background: var(--card);
+     border: 1px solid var(--line);
+     border-radius: 4px;
+     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+     animation: deal 520ms var(--ease-out) backwards;
+     animation-delay: calc(var(--n) * 35ms);
+     transition: transform var(--dur-fast) var(--ease-out);
+}
+
+@media (hover: hover) {
+     .card:hover {
+          transform: translateY(-4px) rotate(var(--tilt));
+     }
+}
+
+@keyframes deal {
+     from {
+          opacity: 0;
+          transform: translate(-40px, -18px) rotate(-14deg);
+     }
+}
+
+.suit-row__void {
+     font-style: italic;
+     color: var(--ink-faint);
+}
+
+.hand__actions {
+     display: flex;
+     flex-wrap: wrap;
+     gap: 0.5rem 1.5rem;
+     margin-top: 1.75rem;
+}
+
+.text-button {
+     font-family: var(--font-display);
+     font-size: 1.25rem;
+     padding-block: 0.5rem;
+}
+
+.text-button > span {
+     background-image: linear-gradient(var(--highlight), var(--highlight));
+     background-repeat: no-repeat;
+     background-position: 0 85%;
+     background-size: 100% 0.35em;
+     transition: background-size var(--dur) var(--ease-out);
+}
+
+.text-button:hover > span,
+.text-button[aria-expanded='true'] > span {
+     background-size: 100% 0.9em;
+}
+
+.hand__bid {
+     margin-top: 1rem;
+     color: var(--ink-soft);
+     animation: rise var(--dur) var(--ease-out) both;
+}
+
+.hand__bid-call {
+     font-family: var(--font-display);
+     font-weight: 400;
+     font-size: 1.75rem;
+     color: var(--ink);
+     margin-right: 0.35rem;
+     vertical-align: -0.1em;
+}
+
+/* ------------------------------------------------------------------
+   Highlighter mode
+------------------------------------------------------------------- */
+.marker-canvas {
+     position: fixed;
+     inset: 0;
+     z-index: 60;
+     width: 100vw;
+     height: 100vh;
+     pointer-events: none;
+     touch-action: none;
+}
+
+.marker-mode .marker-canvas {
+     pointer-events: auto;
+     cursor: crosshair;
+}
+
+.toast {
+     position: fixed;
+     z-index: 70;
+     left: 50%;
+     bottom: max(1.5rem, env(safe-area-inset-bottom));
+     max-width: calc(100vw - 2rem);
+     padding: 0.6rem 1rem;
+     font-size: 0.95rem;
+     text-align: center;
+     color: var(--paper);
+     background: var(--ink);
+     border-radius: 999px;
+     opacity: 0;
+     transform: translate(-50%, 12px);
+     pointer-events: none;
+     transition: opacity var(--dur) var(--ease-out), transform var(--dur) var(--ease-out);
+}
+
+.toast.is-visible {
+     opacity: 1;
+     transform: translate(-50%, 0);
+}
+
 /* ------------------------------------------------------------------
    Reveal on scroll. Hidden only once JS has loaded (the html.js class),
    so the page still reads in full if scripts fail. Plays once.
@@ -562,6 +972,15 @@ a {
 
      .js [data-reveal] {
           transform: none;
+     }
+
+     .js .photo-frame[data-reveal] {
+          transform: rotate(var(--tilt, 0deg));
+     }
+
+     /* Show the interest band as a still line instead of scrolling it. */
+     .marquee__track {
+          animation: none;
      }
 }
 

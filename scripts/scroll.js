@@ -5,11 +5,21 @@
 document.addEventListener('DOMContentLoaded', () => {
     const header = document.getElementById('site-header');
 
+    let ticking = false;
     const updateHeader = () => {
+        ticking = false;
         header.classList.toggle('is-scrolled', window.scrollY > 24);
+        const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = scrollable > 0 ? Math.min(1, window.scrollY / scrollable) : 0;
+        header.style.setProperty('--progress', progress.toFixed(4));
     };
     updateHeader();
-    window.addEventListener('scroll', updateHeader, { passive: true });
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            ticking = true;
+            requestAnimationFrame(updateHeader);
+        }
+    }, { passive: true });
 
     if (!('IntersectionObserver' in window)) return;
 
