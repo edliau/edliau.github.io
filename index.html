@@ -57,9 +57,6 @@
             </a>
         </section>
 
-        <!-- Filled from the same interest list the typing effect uses. Decorative, so hidden from screen readers. -->
-        <div class="marquee" aria-hidden="true"><div class="marquee__track"></div></div>
-
         <section id="about" class="section container" aria-labelledby="about-title">
             <div class="about">
                 <img src="./assets/images/profile.jpg" alt="Portrait of Edward" class="about__portrait" width="640" height="625" data-reveal>
@@ -146,30 +143,24 @@
             </ul>
         </section>
 
-        <section id="bridge" class="section container container--narrow" aria-labelledby="bridge-title">
-            <h2 class="section-title" id="bridge-title" data-reveal>deal me in.</h2>
+        <section id="run" class="section container container--narrow" aria-labelledby="run-title">
+            <h2 class="section-title" id="run-title" data-reveal>one more run.</h2>
             <p class="lead" data-reveal style="--d: 1">
-                I play a lot of contract bridge. Here's a random hand: what would you open with it?
+                Lately I've lost a lot of evenings to Slay the Spire, so here's a tiny deckbuilder of my own:
+                three energy a turn, a handful of cards, and three floors between you and a quiet afternoon.
             </p>
-            <div class="hand" data-reveal style="--d: 2">
-                <div class="hand__suits" id="hand" aria-live="polite"></div>
-                <div class="hand__actions">
-                    <button type="button" class="text-button" id="deal"><span>deal another</span></button>
-                    <button type="button" class="text-button" id="show-bid" aria-expanded="false" aria-controls="bid"><span>what would I bid?</span></button>
-                </div>
-                <p class="hand__bid" id="bid" hidden></p>
-            </div>
+            <div class="game" id="game" data-reveal style="--d: 2"></div>
         </section>
 
-        <section id="contact" class="section section--contact container container--narrow" aria-labelledby="contact-title">
+        <section id="contact" class="section container container--narrow" aria-labelledby="contact-title">
             <h2 class="section-title" id="contact-title" data-reveal>getting in touch.</h2>
             <p class="lead" data-reveal style="--d: 1">you can find me using:</p>
-            <ul class="contact-links" role="list" data-reveal style="--d: 2">
-                <li><a class="text-link" href="mailto:edwardlys@riff.ai">email.</a></li>
-                <li><a class="text-link" href="https://www.linkedin.com/in/edward-liau/">linkedin.</a></li>
-                <li><a class="text-link" href="https://www.instagram.com/edie.wardie/">instagram.</a></li>
-                <li><a class="text-link" href="https://github.com/edliau">github.</a></li>
-                <li><a class="text-link" href="https://t.me/poyoyobing">telegram.</a></li>
+            <ul class="contact-list" role="list" data-reveal style="--d: 2">
+                <li><a class="contact-row" href="mailto:edwardlys@riff.ai"><span class="contact-row__label">email.</span><span class="contact-row__value">edwardlys@riff.ai</span><span class="contact-row__arrow" aria-hidden="true">→</span></a></li>
+                <li><a class="contact-row" href="https://www.linkedin.com/in/edward-liau/"><span class="contact-row__label">linkedin.</span><span class="contact-row__value">in/edward-liau</span><span class="contact-row__arrow" aria-hidden="true">→</span></a></li>
+                <li><a class="contact-row" href="https://www.instagram.com/edie.wardie/"><span class="contact-row__label">instagram.</span><span class="contact-row__value">@edie.wardie</span><span class="contact-row__arrow" aria-hidden="true">→</span></a></li>
+                <li><a class="contact-row" href="https://github.com/edliau"><span class="contact-row__label">github.</span><span class="contact-row__value">edliau</span><span class="contact-row__arrow" aria-hidden="true">→</span></a></li>
+                <li><a class="contact-row" href="https://t.me/poyoyobing"><span class="contact-row__label">telegram.</span><span class="contact-row__value">@poyoyobing</span><span class="contact-row__arrow" aria-hidden="true">→</span></a></li>
             </ul>
             <p class="lead" data-reveal style="--d: 3">hope to see you around :)</p>
         </section>
@@ -184,11 +175,13 @@
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
     <script>
-        // One list feeds both the typing effect and the scrolling interest band.
+        // The things the hero types out, in a random order.
         window.INTERESTS = ["UI/UX enthusiast.", "contract bridge player.", "Golden State Warriors fan.",
             "prospective developer.", "boygenius stan.", "part-time barista.", "hip-hop enjoyer.", "thrift store lover.",
             "coffee addict.", "video game fanatic.", "learning designer.", "mythology nerd.", "website maker.",
-            "collector of cute things.", "musical admirer.", "kuromi obsessor."];
+            "collector of cute things.", "musical admirer.", "kuromi obsessor.", "roguelike deckbuilder fiend.",
+            "customer success person.", "Shikoku pilgrim.", "cat foster cheerleader.", "stage lighting tinkerer.",
+            "Telegram bot builder."];
     </script>
     <script defer src="./scripts/fade.js"></script>
     <script defer src="./scripts/scroll.js"></script>
@@ -196,9 +189,8 @@
     <script defer src="./scripts/dialog.js"></script>
     <script defer src="./scripts/typing.js"></script>
     <script defer src="./scripts/sparks.js"></script>
-    <script defer src="./scripts/marquee.js"></script>
     <script defer src="./scripts/theme.js"></script>
-    <script defer src="./scripts/bridge.js"></script>
+    <script defer src="./scripts/game.js"></script>
     <script defer src="./scripts/marker.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
