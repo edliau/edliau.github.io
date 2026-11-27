@@ -1,45 +1,61 @@
 function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
+    const copy = [...array];
+    for (let i = copy.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
+        [copy[i], copy[j]] = [copy[j], copy[i]];
     }
-    return array;
+    return copy;
 }
 
+// Types each word, holds it, erases it, then moves on. With reduced motion
+// the words swap whole instead of being typed letter by letter.
 function typingEffect(textContainerSelector, words) {
-    // Shuffle the words array
-    words = shuffleArray(words);
-
     const textContainer = document.querySelector(textContainerSelector);
+    if (!textContainer) return;
+
+    const list = shuffleArray(words);
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const TYPE_MS = 75;
+    const ERASE_MS = 35;
+    const HOLD_MS = 2600;
+    const GAP_MS = 350;
+
     let wordIndex = 0;
-    let letterIndex = 0;
+    let length = 0;
 
-    function typeNextWord() {
-        const currentWord = words[wordIndex];
-        textContainer.textContent = currentWord.substring(0, letterIndex + 1);
-        letterIndex++;
-        if (letterIndex === currentWord.length) {
-            setTimeout(eraseWord, 4000); // Increase delay before erasing
+    const nextWord = () => {
+        wordIndex = (wordIndex + 1) % list.length;
+    };
+
+    if (reduceMotion) {
+        const swap = () => {
+            textContainer.textContent = list[wordIndex];
+            nextWord();
+            setTimeout(swap, HOLD_MS + 1000);
+        };
+        swap();
+        return;
+    }
+
+    function type() {
+        const word = list[wordIndex];
+        length++;
+        textContainer.textContent = word.slice(0, length);
+        setTimeout(length < word.length ? type : erase, length < word.length ? TYPE_MS : HOLD_MS);
+    }
+
+    function erase() {
+        length--;
+        textContainer.textContent = list[wordIndex].slice(0, length);
+        if (length > 0) {
+            setTimeout(erase, ERASE_MS);
         } else {
-            setTimeout(typeNextWord, 100); // Delay between each letter typing
+            nextWord();
+            setTimeout(type, GAP_MS);
         }
     }
 
-    function eraseWord() {
-        const currentWord = words[wordIndex];
-        textContainer.textContent = currentWord.substring(0, letterIndex);
-        letterIndex--;
-        if (letterIndex >= 0) {
-            setTimeout(eraseWord, 50); // Delay between each letter erasing
-        } else {
-            wordIndex++;
-            if (wordIndex === words.length) {
-                wordIndex = 0;
-            }
-            setTimeout(typeNextWord, 300);
-        }
-    }
-
-    // Initial start of typing effect
-    typeNextWord();
+    // Start once the hero lines have finished rising in.
+    setTimeout(type, 600);
 }

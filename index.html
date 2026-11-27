@@ -4,149 +4,156 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>edward liau</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <meta name="description" content="Edward Liau: maths and computer science, design, and small things that make communities a little more fun.">
+    <meta name="theme-color" content="#fefce8">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Serif+Text:ital@0;1&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Serif+Text:ital@0;1&display=swap" rel="stylesheet">
     <link href="./css/styles.css" rel="stylesheet">
     <link rel="shortcut icon" type="image/x-icon" href="./assets/images/favicon.ico" />
+    <!-- Lets the stylesheet hide reveal-on-scroll content only when JS is running to show it again. -->
+    <script>document.documentElement.classList.add('js');</script>
 </head>
-<body class="bg-yellow-50 text-gray-900 flex flex-col items-center justify-center min-h-screen">
-    <!-- Fixed position header -->
-    <header class="fixed top-0 left-0 right-0 p-1 pl-0 bg-yellow-50 z-50">
-        <nav class="flex justify-between w-full px-5">
-            <!-- Left side navigation -->
-            <div class="flex space-x-4">
-                <a href="#about" class="text-gray-600 hover:text-gray-900">about</a>
-                <a href="#projects" class="text-gray-600 hover:text-gray-900">projects</a>
-                <a href="#contact" class="text-gray-600 hover:text-gray-900">contact me</a>
+<body>
+    <header class="site-header" id="site-header">
+        <nav class="site-nav container" aria-label="Main">
+            <div class="site-nav__links">
+                <a href="#about" class="nav-link">about</a>
+                <a href="#projects" class="nav-link">projects</a>
+                <a href="#contact" class="nav-link">contact me</a>
             </div>
-            <!-- Right side navigation -->
-            <div class="flex space-x-4">
-                <a href="#" id="scrollToTop" class="text-gray-600 hover:text-gray-900">back to top</a>
-            </div>
+            <a href="#top" class="nav-link nav-link--top" id="scrollToTop">back to top</a>
         </nav>
     </header>
-    <footer class="fixed">
 
-    </footer>
-    <main class="flex flex-col items-start justify-center min-h-screen p-4">
-        <section id ="top" class="mb-4 text-left">
-            <h1 class="text-7xl font-bold ml-2">Hello.</h1>
-            <h2 class="text-3xl ml-2">my name's Edward, and I'm a</h2>
-            <h2 class="text-3xl w-1000 whitespace-pre ml0.5"><span class="typing-container"> <span class="typing-text"></span></span></h2>
-            <h2 class="text-3xl ml-2">check out my stuff below!</h2>
+    <main>
+        <section id="top" class="hero container">
+            <h1 class="hero__title" style="--i: 0">Hello.</h1>
+            <p class="hero__line" style="--i: 1">my name's Edward, and I'm a</p>
+            <p class="hero__line hero__line--typing" style="--i: 2">
+                <span class="typing-text" aria-live="off"></span><span class="typing-caret" aria-hidden="true"></span>
+            </p>
+            <p class="hero__line" style="--i: 3">check out my stuff below!</p>
+            <a href="#about" class="hero__cue" style="--i: 5" aria-label="Scroll to about">
+                <span>scroll</span>
+                <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M8 2v11M3 8.5l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
         </section>
-    </main>
-    <div class="p-4 w-3/4 flex flex-col items-center pb-24 min-h-screen pt-50">
-        <section id="about" class="mb-4 flex flex-col items-center pb-5 w-full">
-            <div class="flex flex-col sm:flex-row items-center w-full mb-4 fade-section">
-                <div class="w-full sm:w-1/2 flex justify-center mb-4">
-                    <img src="./assets/images/profile.jpg" class="rounded-full object-cover w-48 h-48 sm:w-1/2 sm:h-1/2">
-                </div>
-                <div class="w-full sm:w-1/2 sm:text-left text-center">
-                    <h1 class="text-6xl font-semibold mb-2 pb-3">about me.</h1>
-                    <p class="text-lg">Hello! I'm a rising senior in Yale-NUS College, majoring in Mathematical, Computational, and Statistical Sciences, with a focus in Computer Science. 
+
+        <section id="about" class="section container" aria-labelledby="about-title">
+            <div class="about">
+                <img src="./assets/images/profile.jpg" alt="Portrait of Edward" class="about__portrait" width="640" height="625" data-reveal>
+                <div class="about__text">
+                    <h2 class="section-title" id="about-title" data-reveal>about me.</h2>
+                    <p class="lead" data-reveal style="--d: 1">Hello! I'm a rising senior in Yale-NUS College, majoring in Mathematical, Computational, and Statistical Sciences, with a focus in Computer Science.
                         I love all things design related, and hope to build intuitive human-centric web apps.</p>
                 </div>
             </div>
-            <div class="w-full sm:w-11/12 flex flex-col items-center justify-center pt-3 h-full fade-section">
-                <div class="sm:w-full w-3/4 flex flex-wrap flex-row items-center sm:space-x-3 space-x-0 sm:text-left text-center text-lg pb-6">
-                    <p class="text-lg">recently, I've...</p>
-                    <a href="#" data-image="image1" class="hover:text-gray-600">been on exchange at Yale</a>
-                    <a href="#" data-image="image2" class="hover:text-gray-600">trekked across Shikoku</a>
-                    <a href="#" data-image="image3" class="hover:text-gray-600">watched a cat be fostered</a>
-                    <a href="#" data-image="image4" class="hover:text-gray-600">tried out lighting tech</a>
+
+            <div class="recently">
+                <div class="recently__list" data-reveal>
+                    <p class="recently__label">recently, I've…</p>
+                    <ul role="list">
+                        <li><button type="button" class="photo-link is-active" data-image="image1" aria-pressed="true"><span>been on exchange at Yale</span></button></li>
+                        <li><button type="button" class="photo-link" data-image="image2" aria-pressed="false"><span>trekked across Shikoku</span></button></li>
+                        <li><button type="button" class="photo-link" data-image="image3" aria-pressed="false"><span>watched a cat be fostered</span></button></li>
+                        <li><button type="button" class="photo-link" data-image="image4" aria-pressed="false"><span>tried out lighting tech</span></button></li>
+                    </ul>
                 </div>
-                <div class="w-full relative flex justify-center items-center image-container sm:w-1/2 h-80 rounded-md">
-                    <img src="./assets/images/yale.jpg" id="image1" class="h-full w-full object-cover rounded-md active">
-                    <img src="./assets/images/working.jpg" id="image2" class="h-full w-full object-cover rounded-md">
-                    <img src="./assets/images/cat.jpg" id="image3" class="h-full w-full object-cover rounded-md">
-                    <img src="./assets/images/tapedays.jpg" id="image4" class="h-full w-full object-cover rounded-md">
+                <div class="photo-stack" data-reveal style="--d: 1">
+                    <img src="./assets/images/yale.jpg" id="image1" alt="On exchange at Yale" class="is-active">
+                    <img src="./assets/images/working.jpg" id="image2" alt="Trekking across Shikoku" loading="lazy">
+                    <img src="./assets/images/cat.jpg" id="image3" alt="The foster cat" loading="lazy">
+                    <img src="./assets/images/tapedays.jpg" id="image4" alt="Working on stage lighting" loading="lazy">
                 </div>
             </div>
         </section>
-    </div>
-    
-    <div class="p-4 w-3/4 flex flex-col items-center pb-24 min-h-screen pt-50">
-        <section id="projects" class="mb-4 fade-section w-full sm:w-1/2 sm:text-left text-center">
-          <h1 class="text-6xl font-semibold mb-2 pb-3">projects.</h1>
-          <p class="text-lg pt-3">
-            I make functional products which are inspired by my communities and try to make their lives easier, or just
-            a little more fun. Click on any of the projects below to find our more about them!
-          </p>
-          <ul class="list-item list-inside mx-auto text-3xl font-semibold pt-6">
-            <li onclick="toggleContent('stuorg-bot')">Stu the Stuorg Bot</li>
-            <div id="stuorg-bot-content" class="expanded-content text-lg font-normal">
-                <div class="content-container">
-                <p>Stu is a Telegram bot designed and implemented by me in Python for Yale-NUS' Student Affairs Office.
-                    It's used by students to answer FAQs, make classroom booking requests, and check for upcoming events.
-                    Try out using Stu <a href="https://t.me/YNCStuorgsBot"><u>here</u></a>.
-                </p>
-             </div>
-            </div>
-            <li onclick="toggleContent('yuttle-imp')">yuttle-imp</li>
-            <div id="yuttle-imp-content" class="expanded-content text-lg font-normal">
-                <div class="content-container">
-                <p>This app was built as part of Yale's CPSC419 Full Stack Web Programming module, improving
-                    the lackluster Yale Shuttle app to be more user-friendly. I designed the app's database,
-                    and implemented the algorithms for route finding and visualisation. You can check out 
-                    the project repository <a href="https://github.com/edliau/yaleshuttle-imp"><u>here</u></a>.
-                </p>
-             </div>
-            </div>
-            <li onclick="toggleContent('generator')">ya-leh-nus generator</li>
-            <div id="generator-content" class="expanded-content text-lg font-normal">
-            <div class="content-container">
-                <p>inspired by Christopher Strachey's generator of love letters, and Jean Wang's
-                    <a href="https://jingyingwang.github.io/yaliesbio/"><u>yalies.bio</u></a>, this is my
-                    love letter to Yale-NUS' closure, and a fun way to remember what made Yale-NUS students
-                    so special. You can have fun with it <a href="./generator.html"><u>here</u></a>!
-                </p>
-            </div>
-            </div>
-          </ul>
-        </section>
-      </div>
 
-      <div class="p-4 w-3/4 flex flex-col items-center pb-24 pt-35">
-        <section id="contact" class="mb-4 fade-section w-full sm:w-1/2 text-center">
-          <h1 class="text-6xl font-semibold mb-2 pb-3">getting in touch.</h1>
-          <p class="text-lg pt-3">
-            you can find me using:
-          </p>
-          <ul class="list-item list-inside mx-auto text-lg pt-6">
-            <li ><a class="hover:text-gray-400" href="mailto:edward.liau@u.yale-nus.edu.sg">email.</a></li>
-            <li><a class="hover:text-gray-400" href="https://www.linkedin.com/in/edward-liau/">linkedin.</a></li>
-            <li><a class="hover:text-gray-400" href="https://www.instagram.com/edie.wardie/">instagram.</a></li>
-            <li><a class="hover:text-gray-400" href="https://github.com/edliau">github.</a></li>
-            <li><a class="hover:text-gray-400" href="https://t.me/poyoyobing">telegram.</a></li>
-          </ul>
-          <p class="text-lg pt-6">
-            hope to see you around :)
-          </p>
-        </section>
-      </div>
+        <section id="projects" class="section container container--narrow" aria-labelledby="projects-title">
+            <h2 class="section-title" id="projects-title" data-reveal>projects.</h2>
+            <p class="lead" data-reveal style="--d: 1">
+                I make functional products which are inspired by my communities and try to make their lives easier, or just
+                a little more fun. Click on any of the projects below to find out more about them!
+            </p>
 
-    <div class="items-center w-1/2">
-        <section id="copyright" class="mb-4 w-full text-center">
-            <p class="text-xs font-normal text-gray-400">made by edward © 2024, with images from Thaddeus Ang and Loe Luo</p>
+            <ul class="projects" role="list">
+                <li class="project" data-reveal style="--d: 2">
+                    <button type="button" class="project__toggle" aria-expanded="false" aria-controls="stuorg-bot-content">
+                        <span class="project__name">Stu the Stuorg Bot</span>
+                        <span class="project__icon" aria-hidden="true"></span>
+                    </button>
+                    <div id="stuorg-bot-content" class="project__panel">
+                        <div class="project__body">
+                            <p>Stu is a Telegram bot designed and implemented by me in Python for Yale-NUS' Student Affairs Office.
+                                It's used by students to answer FAQs, make classroom booking requests, and check for upcoming events.
+                                Try out using Stu <a href="https://t.me/YNCStuorgsBot" class="text-link">here</a>.
+                            </p>
+                        </div>
+                    </div>
+                </li>
+                <li class="project" data-reveal style="--d: 3">
+                    <button type="button" class="project__toggle" aria-expanded="false" aria-controls="yuttle-imp-content">
+                        <span class="project__name">yuttle-imp</span>
+                        <span class="project__icon" aria-hidden="true"></span>
+                    </button>
+                    <div id="yuttle-imp-content" class="project__panel">
+                        <div class="project__body">
+                            <p>This app was built as part of Yale's CPSC419 Full Stack Web Programming module, improving
+                                the lackluster Yale Shuttle app to be more user-friendly. I designed the app's database,
+                                and implemented the algorithms for route finding and visualisation. You can check out
+                                the project repository <a href="https://github.com/edliau/yaleshuttle-imp" class="text-link">here</a>.
+                            </p>
+                        </div>
+                    </div>
+                </li>
+                <li class="project" data-reveal style="--d: 4">
+                    <button type="button" class="project__toggle" aria-expanded="false" aria-controls="generator-content">
+                        <span class="project__name">ya-leh-nus generator</span>
+                        <span class="project__icon" aria-hidden="true"></span>
+                    </button>
+                    <div id="generator-content" class="project__panel">
+                        <div class="project__body">
+                            <p>inspired by Christopher Strachey's generator of love letters, and Jean Wang's
+                                <a href="https://jingyingwang.github.io/yaliesbio/" class="text-link">yalies.bio</a>, this is my
+                                love letter to Yale-NUS' closure, and a fun way to remember what made Yale-NUS students
+                                so special. You can have fun with it <a href="./generator.html" class="text-link">here</a>!
+                            </p>
+                        </div>
+                    </div>
+                </li>
+            </ul>
         </section>
-    </div>
 
-    <!-- Include the typingEffect.js file -->
+        <section id="contact" class="section section--contact container container--narrow" aria-labelledby="contact-title">
+            <h2 class="section-title" id="contact-title" data-reveal>getting in touch.</h2>
+            <p class="lead" data-reveal style="--d: 1">you can find me using:</p>
+            <ul class="contact-links" role="list" data-reveal style="--d: 2">
+                <li><a class="text-link" href="mailto:edward.liau@u.yale-nus.edu.sg">email.</a></li>
+                <li><a class="text-link" href="https://www.linkedin.com/in/edward-liau/">linkedin.</a></li>
+                <li><a class="text-link" href="https://www.instagram.com/edie.wardie/">instagram.</a></li>
+                <li><a class="text-link" href="https://github.com/edliau">github.</a></li>
+                <li><a class="text-link" href="https://t.me/poyoyobing">telegram.</a></li>
+            </ul>
+            <p class="lead" data-reveal style="--d: 3">hope to see you around :)</p>
+        </section>
+    </main>
+
+    <footer class="site-footer container">
+        <p>made by edward © 2024, with images from Thaddeus Ang and Loe Luo</p>
+    </footer>
+
     <script defer src="./scripts/fade.js"></script>
     <script defer src="./scripts/scroll.js"></script>
     <script defer src="./scripts/hover-image.js"></script>
     <script defer src="./scripts/dialog.js"></script>
-    <script src="./scripts/typing.js"></script>
+    <script defer src="./scripts/typing.js"></script>
     <script>
-        // Call the typingEffect function with the appropriate selector and words array
-        typingEffect('.typing-text', ["UI/UX enthusiast.", "contract bridge player.", "Golden State Warriors fan.", 
-        "prospective developer.", "boygenius stan.", "part-time barista.", "hip-hop enjoyer.", "thrift store lover.",
-        "coffee addict.", "video game fanatic.", "learning designer.", "mythology nerd.", "website maker.",
-        "collector of cute things.","musical admirer.","kuromi obsessor."]);
+        document.addEventListener('DOMContentLoaded', () => {
+            typingEffect('.typing-text', ["UI/UX enthusiast.", "contract bridge player.", "Golden State Warriors fan.",
+            "prospective developer.", "boygenius stan.", "part-time barista.", "hip-hop enjoyer.", "thrift store lover.",
+            "coffee addict.", "video game fanatic.", "learning designer.", "mythology nerd.", "website maker.",
+            "collector of cute things.","musical admirer.","kuromi obsessor."]);
+        });
     </script>
 </body>
 </html>

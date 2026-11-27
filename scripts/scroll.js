@@ -1,34 +1,32 @@
+// Smooth scrolling and the header offset are handled in CSS
+// (scroll-behavior and scroll-margin-top). This script only:
+// - adds a hairline under the header and shows "back to top" once you scroll
+// - marks the nav link of the section currently on screen
 document.addEventListener('DOMContentLoaded', () => {
-    const offset = 80; // Adjust this value to set how much below the top the section should appear
+    const header = document.getElementById('site-header');
 
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
+    const updateHeader = () => {
+        header.classList.toggle('is-scrolled', window.scrollY > 24);
+    };
+    updateHeader();
+    window.addEventListener('scroll', updateHeader, { passive: true });
 
-            const targetId = this.getAttribute('href').substring(1);
-            const targetElement = document.getElementById(targetId);
-            const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - offset;
+    if (!('IntersectionObserver' in window)) return;
 
-            window.scrollTo({
-                top: targetPosition,
-                behavior: 'smooth'
-            });
+    const links = document.querySelectorAll('.site-nav__links .nav-link');
+    const linkFor = id => document.querySelector(`.site-nav__links a[href="#${id}"]`);
+
+    const spy = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            links.forEach(link => link.removeAttribute('aria-current'));
+            const link = linkFor(entry.target.id);
+            if (link) link.setAttribute('aria-current', 'true');
         });
+    }, {
+        // A thin band across the middle of the screen decides which section is "current".
+        rootMargin: '-45% 0px -50% 0px'
     });
-});
 
-document.addEventListener('DOMContentLoaded', () => {
-    // Get the "Scroll to Top" link
-    const scrollToTopLink = document.getElementById('scrollToTop');
-
-    // Add click event listener to the link
-    scrollToTopLink.addEventListener('click', (e) => {
-        e.preventDefault(); // Prevent default link behavior
-
-        // Scroll to the top of the page
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    });
+    document.querySelectorAll('main > section[id]').forEach(section => spy.observe(section));
 });
