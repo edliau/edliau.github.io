@@ -1,19 +1,23 @@
+// Reveal [data-reveal] elements as they scroll into view. Each one plays once.
 document.addEventListener('DOMContentLoaded', () => {
-    const sections = document.querySelectorAll('.fade-section');
+    const elements = document.querySelectorAll('[data-reveal]');
+
+    if (!('IntersectionObserver' in window)) {
+        elements.forEach(el => el.classList.add('is-visible'));
+        return;
+    }
 
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-            } else {
-                entry.target.classList.remove('visible');
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target);
             }
         });
     }, {
-        threshold: 0.1
+        threshold: 0.15,
+        rootMargin: '0px 0px -8% 0px'
     });
 
-    sections.forEach(section => {
-        observer.observe(section);
-    });
+    elements.forEach(el => observer.observe(el));
 });

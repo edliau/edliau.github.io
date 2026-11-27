@@ -1,109 +1,993 @@
+/* ------------------------------------------------------------------
+   Tokens
+   Cream paper, near-black ink, one yellow highlighter. Two serifs:
+   DM Serif Display for headings, DM Serif Text for everything else.
+------------------------------------------------------------------- */
+:root {
+     --paper: #fefce8;
+     --ink: #1c1917;
+     --ink-soft: #57534e;
+     --ink-faint: #a8a29e;
+     --line: rgba(28, 25, 23, 0.12);
+     --highlight: rgba(255, 230, 0, 0.55);
+     --marker: rgba(255, 230, 0, 0.45);
+     --paper-glass: rgba(254, 252, 232, 0.85);
+     --card: #fffef8;
+     --shadow: 0 1px 2px rgba(28, 25, 23, 0.06), 0 10px 30px rgba(28, 25, 23, 0.1);
+     color-scheme: light;
+
+     --font-display: 'DM Serif Display', Georgia, serif;
+     --font-text: 'DM Serif Text', Georgia, serif;
+
+     --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+     --dur-fast: 200ms;
+     --dur: 450ms;
+     --dur-slow: 800ms;
+
+     --header-h: 3.25rem;
+     --gutter: clamp(1.25rem, 5vw, 3rem);
+}
+
+/* "lights off": warm dark paper, same highlighter. Applies when chosen, or
+   when the device prefers dark and nothing has been chosen yet. */
+:root[data-theme='dark'] {
+     --paper: #17150f;
+     --ink: #f4efe1;
+     --ink-soft: #bdb5a3;
+     --ink-faint: #7d766a;
+     --line: rgba(244, 239, 225, 0.14);
+     --highlight: rgba(255, 214, 0, 0.34);
+     --marker: rgba(255, 214, 0, 0.4);
+     --paper-glass: rgba(23, 21, 15, 0.82);
+     --card: #24211a;
+     --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 12px 32px rgba(0, 0, 0, 0.45);
+     color-scheme: dark;
+}
+
+@media (prefers-color-scheme: dark) {
+     :root:not([data-theme='light']) {
+          --paper: #17150f;
+          --ink: #f4efe1;
+          --ink-soft: #bdb5a3;
+          --ink-faint: #7d766a;
+          --line: rgba(244, 239, 225, 0.14);
+          --highlight: rgba(255, 214, 0, 0.34);
+          --marker: rgba(255, 214, 0, 0.4);
+          --paper-glass: rgba(23, 21, 15, 0.82);
+          --card: #24211a;
+          --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 12px 32px rgba(0, 0, 0, 0.45);
+          color-scheme: dark;
+     }
+}
+
+/* Only while switching themes, so the house lights fade rather than snap. */
+.theme-fade,
+.theme-fade *,
+.theme-fade *::before,
+.theme-fade *::after {
+     transition: background-color 600ms var(--ease-out), color 600ms var(--ease-out), border-color 600ms var(--ease-out) !important;
+}
+
+/* ------------------------------------------------------------------
+   Base
+------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+     box-sizing: border-box;
+}
+
+html {
+     scroll-behavior: smooth;
+     -webkit-text-size-adjust: 100%;
+}
+
 body {
-     font-family: 'DM Serif Text', serif;
-}
-.typing-container {
-     width: 300px; /* Set a fixed width for the container */
-     position: relative;
-}
-.typing-text {
-     white-space: nowrap;
-     overflow: hidden;
-     display: inline;
+     margin: 0;
+     background: var(--paper);
+     color: var(--ink);
+     font-family: var(--font-text);
+     font-size: 1.125rem;
+     line-height: 1.6;
+     overflow-x: hidden;
+     -webkit-font-smoothing: antialiased;
 }
 
-.typing-text::before {
-     content: '';
-     position: absolute;
-     top: 50%;
-     left: 0;
-     transform: translateY(-50%);
+h1, h2, p, ul {
+     margin: 0;
+}
+
+ul[role='list'] {
+     list-style: none;
+     padding: 0;
+}
+
+img {
+     display: block;
+     max-width: 100%;
+}
+
+button {
+     font: inherit;
+     color: inherit;
+     background: none;
+     border: 0;
+     padding: 0;
+     cursor: pointer;
+     text-align: inherit;
+}
+
+a {
+     color: inherit;
+}
+
+:focus-visible {
+     outline: 2px solid var(--ink);
+     outline-offset: 3px;
+     border-radius: 2px;
+}
+
+::selection {
+     background: var(--highlight);
+}
+
+.container {
      width: 100%;
-     height: 110%;
-     background-color: rgba(255, 255, 0, 0.5); /* Adjust the color and opacity as needed */
-     z-index: -1;
- }
+     max-width: 64rem;
+     margin-inline: auto;
+     padding-inline: var(--gutter);
+}
 
-/* Border-right blinking animation */
-.typing-text::after {
-     content: '';
+/* Narrow content that keeps the same left edge as the wide sections. */
+.container--narrow > * {
+     max-width: 40rem;
+}
+
+/* ------------------------------------------------------------------
+   Highlighter motif: a yellow marker stroke that sweeps in under text.
+   Shared by links, the photo list and the active nav item.
+------------------------------------------------------------------- */
+.text-link,
+.photo-link > span,
+.nav-link {
+     text-decoration: none;
+     background-image: linear-gradient(var(--highlight), var(--highlight));
+     background-repeat: no-repeat;
+     background-position: 0 85%;
+     background-size: 0% 0.45em;
+     transition: background-size var(--dur) var(--ease-out), color var(--dur-fast);
+     -webkit-box-decoration-break: clone;
+     box-decoration-break: clone;
+}
+
+.text-link {
+     background-size: 100% 1px;
+     background-image: linear-gradient(currentColor, currentColor);
+     background-position: 0 92%;
+}
+
+@media (hover: hover) {
+     .text-link:hover {
+          background-image: linear-gradient(var(--highlight), var(--highlight));
+          background-size: 100% 0.45em;
+          background-position: 0 85%;
+     }
+}
+
+/* ------------------------------------------------------------------
+   Header
+------------------------------------------------------------------- */
+.site-header {
+     position: fixed;
+     inset: 0 0 auto 0;
+     z-index: 50;
+     background: var(--paper-glass);
+     -webkit-backdrop-filter: blur(8px);
+     backdrop-filter: blur(8px);
+     border-bottom: 1px solid transparent;
+     transition: border-color var(--dur) var(--ease-out);
+}
+
+.site-header.is-scrolled {
+     border-bottom-color: var(--line);
+}
+
+.site-nav {
+     max-width: none;
+     height: var(--header-h);
+     display: flex;
+     align-items: center;
+     justify-content: space-between;
+     gap: 1rem;
+     font-size: 1rem;
+}
+
+.site-nav__links {
+     display: flex;
+     gap: clamp(0.75rem, 3vw, 1.5rem);
+}
+
+.nav-link {
+     color: var(--ink-soft);
+     white-space: nowrap;
+     padding-block: 0.5rem;
+     background-position: 0 70%;
+}
+
+.nav-link:hover,
+.nav-link[aria-current='true'] {
+     color: var(--ink);
+}
+
+.nav-link[aria-current='true'] {
+     background-size: 100% 0.45em;
+}
+
+.nav-link--top {
+     opacity: 0;
+     pointer-events: none;
+     transition: opacity var(--dur) var(--ease-out), color var(--dur-fast);
+}
+
+.site-header.is-scrolled .nav-link--top {
+     opacity: 1;
+     pointer-events: auto;
+}
+
+.site-nav__actions {
+     display: flex;
+     align-items: center;
+     gap: clamp(0.75rem, 3vw, 1.5rem);
+}
+
+.nav-link__short {
+     display: none;
+}
+
+@media (max-width: 639px) {
+     .nav-link__full,
+     .lights__label {
+          display: none;
+     }
+
+     .nav-link__short {
+          display: inline;
+     }
+}
+
+/* The lights switch: a bulb that glows when the lights are on. */
+.lights {
+     display: inline-flex;
+     align-items: center;
+     gap: 0.4rem;
+     color: var(--ink-soft);
+     padding-block: 0.5rem;
+     transition: color var(--dur-fast);
+}
+
+.lights:hover {
+     color: var(--ink);
+}
+
+.lights svg {
+     transition: transform var(--dur) var(--ease-out);
+}
+
+.lights:hover svg {
+     transform: rotate(-12deg);
+}
+
+.lights__glow {
+     transition: opacity var(--dur) var(--ease-out);
+}
+
+.lights[aria-pressed='true'] .lights__glow {
+     opacity: 0;
+}
+
+.lights[aria-pressed='true'] svg path:first-child {
+     fill: var(--highlight);
+}
+
+/* Reading progress: a highlighter stroke along the bottom of the header. */
+.progress {
      position: absolute;
-     right: -3px;
-     top: 0;
+     left: 0;
+     right: 0;
+     bottom: -1px;
+     height: 3px;
+     pointer-events: none;
+}
+
+.progress__bar {
      height: 100%;
-     border-right: 2px solid black;
-     animation: blink 0.9s infinite;
+     background: var(--marker);
+     transform-origin: 0 50%;
+     transform: scaleX(var(--progress, 0));
+}
+
+/* ------------------------------------------------------------------
+   Hero
+------------------------------------------------------------------- */
+.hero {
+     position: relative;
+     min-height: 100vh;
+     min-height: 100svh;
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
+     padding-block: calc(var(--header-h) + 2rem) 5rem;
+}
+
+.hero__title {
+     font-family: var(--font-display);
+     font-weight: 400;
+     font-size: clamp(4.5rem, 14vw, 9rem);
+     line-height: 0.95;
+     letter-spacing: -0.02em;
+     margin-bottom: 0.25em;
+}
+
+.hero__line {
+     font-size: clamp(1.5rem, 4.5vw, 2.25rem);
+     line-height: 1.35;
+}
+
+.hero__line--typing {
+     /* Reserve the line so the layout never jumps while a word types or erases. */
+     position: relative;
+     min-height: 1.35em;
+}
+
+.typing-button {
+     cursor: pointer;
+}
+
+.typing-button:active .typing-text {
+     background: var(--marker);
+}
+
+.typing-text {
+     background: var(--highlight);
+     -webkit-box-decoration-break: clone;
+     box-decoration-break: clone;
+     padding-inline: 0.15em;
+     margin-inline-start: -0.15em;
+}
+
+.typing-text:empty {
+     padding: 0;
+}
+
+.typing-caret {
+     display: inline-block;
+     width: 2px;
+     height: 1.05em;
+     margin-left: 2px;
+     vertical-align: -0.15em;
+     background: var(--ink);
+     animation: blink 1s steps(1) infinite;
 }
 
 @keyframes blink {
-     0% {
-          opacity: 1;
-     }
      50% {
           opacity: 0;
      }
-     100% {
-          opacity: 1;
+}
+
+.hero__cue {
+     position: absolute;
+     left: var(--gutter);
+     bottom: 2rem;
+     display: inline-flex;
+     align-items: center;
+     gap: 0.5rem;
+     font-size: 0.95rem;
+     color: var(--ink-soft);
+     text-decoration: none;
+}
+
+.hero__cue svg {
+     animation: nudge 2.4s var(--ease-out) infinite;
+}
+
+@keyframes nudge {
+     0%, 60%, 100% {
+          transform: translateY(0);
+     }
+     30% {
+          transform: translateY(4px);
      }
 }
 
-.fade-section {
-     opacity: 0;
-     filter: blur(5px);
-     transform: translateX(-100%);
-     transition: all 1.3s;
- }
+/* Staggered entrance for the hero, one line after another. */
+.hero > * {
+     animation: rise var(--dur-slow) var(--ease-out) both;
+     animation-delay: calc(var(--i, 0) * 120ms + 100ms);
+}
 
- .fade-section.visible {
-     opacity: 1;
-     filter: blur(0);
-     transform: translateX(0);
- }
+@keyframes rise {
+     from {
+          opacity: 0;
+          transform: translateY(16px);
+     }
+}
 
- .image-container {
+/* ------------------------------------------------------------------
+   Sections
+------------------------------------------------------------------- */
+.section {
+     padding-block: clamp(5rem, 14vh, 9rem);
+     scroll-margin-top: var(--header-h);
+}
+
+.section-title {
+     font-family: var(--font-display);
+     font-weight: 400;
+     font-size: clamp(2.75rem, 8vw, 4.5rem);
+     line-height: 1;
+     letter-spacing: -0.015em;
+     margin-bottom: 1.5rem;
+}
+
+.lead {
+     font-size: clamp(1.125rem, 2vw, 1.25rem);
+     max-width: 60ch;
+}
+
+/* About */
+.about {
+     display: grid;
+     gap: 2rem;
+     justify-items: center;
+     text-align: center;
+}
+
+.about__portrait {
+     width: clamp(10rem, 30vw, 16rem);
+     height: auto;
+     aspect-ratio: 1;
+     object-fit: cover;
+     border-radius: 50%;
+}
+
+@media (min-width: 768px) {
+     .about {
+          grid-template-columns: auto 1fr;
+          align-items: center;
+          justify-items: start;
+          text-align: left;
+          gap: clamp(2.5rem, 6vw, 5rem);
+     }
+}
+
+/* Recently: hover, focus or tap a line to swap the photo. */
+.recently {
+     display: grid;
+     gap: 2rem;
+     margin-top: clamp(4rem, 10vh, 6rem);
+}
+
+.recently__label {
+     color: var(--ink-soft);
+     margin-bottom: 0.75rem;
+}
+
+.recently__list ul {
+     display: grid;
+     gap: 0.25rem;
+}
+
+.photo-link {
+     font-family: var(--font-display);
+     font-size: clamp(1.5rem, 4vw, 2rem);
+     line-height: 1.3;
+     color: var(--ink-soft);
+     padding-block: 0.25rem;
+}
+
+.photo-link.is-active {
+     color: var(--ink);
+}
+
+.photo-link.is-active > span {
+     background-size: 100% 0.45em;
+}
+
+@media (hover: hover) {
+     .photo-link:hover {
+          color: var(--ink);
+     }
+}
+
+/* Scrapbook frame: paper border, a strip of highlighter tape, and a tilt
+   that changes with each photo (set from data-tilt in hover-image.js). */
+.photo-frame {
      position: relative;
-     overflow: hidden;
- }
- 
- .image-container img {
+     padding: 0.6rem 0.6rem 2rem;
+     background: var(--card);
+     box-shadow: var(--shadow);
+     transform: rotate(var(--tilt, 0deg));
+     transition: transform 900ms var(--ease-out);
+}
+
+.js .photo-frame[data-reveal] {
+     transform: translateY(24px) rotate(var(--tilt, 0deg));
+}
+
+.js .photo-frame[data-reveal].is-visible {
+     transform: rotate(var(--tilt, 0deg));
+}
+
+.photo-frame::before {
+     content: '';
      position: absolute;
-     top: 0;
-     left: 0;
-     opacity: 0;
-     filter: blur(5px);
-     transform: translateX(100%); /* Initially, set translateX to 100% to move images out of view */
-     transition: all 1.2s;
- }
- 
- .image-container img.active {
-     opacity: 1;
-     filter: blur(0);
-     transform: translateX(0); /* Keep translateX at 0 for the active image */
- }
- 
- .image-container img.fade-out {
-     transform: translateX(-100%); /* Transition out to the left side of the screen */
- }
- 
-.image-container img.fade-in {
-     transform: translateX(calc(0% - var(--offset))); /* Transition in to the original position */
- }
- 
- .expanded-content {
-     max-height: 0;
+     z-index: 1;
+     top: -0.7rem;
+     left: 50%;
+     width: 6.5rem;
+     height: 1.5rem;
+     background: var(--marker);
+     transform: translateX(-50%) rotate(-3deg);
+     -webkit-mask: linear-gradient(90deg, transparent 0 2px, #000 2px calc(100% - 2px), transparent calc(100% - 2px));
+     mask: linear-gradient(90deg, transparent 0 2px, #000 2px calc(100% - 2px), transparent calc(100% - 2px));
+}
+
+.photo-stack {
+     position: relative;
+     aspect-ratio: 4 / 3;
      overflow: hidden;
-     transition: max-height 0.4s ease;
-   }
+     background: var(--line);
+}
 
-   .expanded-content.active {
-     max-height: 500px; /* Adjust this value as needed */
-     transition: max-height 0.4s ease;
-   }
+.photo-stack img {
+     position: absolute;
+     inset: 0;
+     width: 100%;
+     height: 100%;
+     object-fit: cover;
+     opacity: 0;
+     transform: scale(1.04);
+     transition: opacity var(--dur-slow) var(--ease-out), transform 1.2s var(--ease-out);
+}
 
-   .expanded-content p {
-     margin: 0;
-   }
+.photo-stack img.is-active {
+     opacity: 1;
+     transform: scale(1);
+}
 
-   .content-container {
-     padding-top: 4px;
-     padding-bottom: 15px; /* Adjust this value as needed */
-   }
+@media (min-width: 768px) {
+     .recently {
+          grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+          align-items: center;
+          gap: clamp(2.5rem, 6vw, 5rem);
+     }
+}
+
+/* Projects */
+.projects {
+     margin-top: 2.5rem;
+     border-top: 1px solid var(--line);
+}
+
+.project {
+     border-bottom: 1px solid var(--line);
+}
+
+.project__toggle {
+     width: 100%;
+     display: flex;
+     align-items: center;
+     justify-content: space-between;
+     gap: 1rem;
+     padding-block: 1.25rem;
+}
+
+.project__name {
+     font-family: var(--font-display);
+     font-size: clamp(1.5rem, 4.5vw, 2.125rem);
+     line-height: 1.2;
+     transition: transform var(--dur) var(--ease-out);
+}
+
+@media (hover: hover) {
+     .project__toggle:hover .project__name {
+          transform: translateX(0.35rem);
+     }
+}
+
+/* Plus that turns into a minus. */
+.project__icon {
+     position: relative;
+     flex: none;
+     width: 1rem;
+     height: 1rem;
+}
+
+.project__icon::before,
+.project__icon::after {
+     content: '';
+     position: absolute;
+     inset: 50% 0 auto 0;
+     height: 1.5px;
+     margin-top: -0.75px;
+     background: currentColor;
+     transition: transform var(--dur) var(--ease-out);
+}
+
+.project__icon::after {
+     transform: rotate(90deg);
+}
+
+.project__toggle[aria-expanded='true'] .project__icon::after {
+     transform: rotate(0deg);
+}
+
+/* Animates to the content's real height, so long descriptions never clip. */
+.project__panel {
+     display: grid;
+     grid-template-rows: 0fr;
+     transition: grid-template-rows var(--dur) var(--ease-out);
+}
+
+.project__panel.is-open {
+     grid-template-rows: 1fr;
+}
+
+.project__body {
+     overflow: hidden;
+     min-height: 0;
+}
+
+.project__body p {
+     padding-bottom: 1.5rem;
+     color: var(--ink-soft);
+     opacity: 0;
+     transform: translateY(-6px);
+     transition: opacity var(--dur) var(--ease-out), transform var(--dur) var(--ease-out);
+}
+
+.project__panel.is-open .project__body p {
+     opacity: 1;
+     transform: none;
+     transition-delay: 80ms;
+}
+
+/* Contact */
+.section--contact {
+     text-align: center;
+}
+
+.section--contact > * {
+     margin-inline: auto;
+}
+
+.contact-links {
+     display: flex;
+     flex-wrap: wrap;
+     justify-content: center;
+     gap: 0.5rem 1.75rem;
+     margin-block: 2rem;
+     font-family: var(--font-display);
+     font-size: clamp(1.5rem, 4vw, 2rem);
+}
+
+.contact-links a {
+     display: inline-block;
+     padding-block: 0.25rem;
+}
+
+/* Footer */
+.site-footer {
+     padding-block: 3rem;
+     text-align: center;
+     font-size: 0.8rem;
+     color: var(--ink-faint);
+}
+
+.cheat-hint {
+     margin-top: 0.5rem;
+     padding-block: 0.5rem;
+     font-size: 0.75rem;
+     letter-spacing: 0.15em;
+     color: var(--ink-faint);
+     opacity: 0.7;
+     transition: opacity var(--dur-fast), color var(--dur-fast);
+}
+
+.cheat-hint:hover,
+.cheat-hint[aria-pressed='true'] {
+     opacity: 1;
+     color: var(--ink-soft);
+}
+
+/* ------------------------------------------------------------------
+   Hero extras: glyphs that drift off each finished word
+------------------------------------------------------------------- */
+.sparks {
+     position: absolute;
+     left: 0;
+     top: 0;
+     pointer-events: none;
+}
+
+.spark {
+     position: absolute;
+     left: var(--x);
+     top: 0.2em;
+     font-family: var(--font-display);
+     font-size: 0.55em;
+     white-space: nowrap;
+     color: var(--ink-soft);
+     opacity: 0;
+     animation: spark 1.6s var(--ease-out) forwards;
+}
+
+@keyframes spark {
+     0% {
+          opacity: 0;
+          transform: translate(0, 0) rotate(0deg) scale(0.6);
+     }
+     20% {
+          opacity: 1;
+     }
+     100% {
+          opacity: 0;
+          transform: translate(var(--dx), var(--dy)) rotate(var(--r)) scale(1);
+     }
+}
+
+/* ------------------------------------------------------------------
+   Interest band between the hero and about
+------------------------------------------------------------------- */
+.marquee {
+     overflow: hidden;
+     border-block: 1px solid var(--line);
+     padding-block: 0.9rem;
+     -webkit-mask: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+     mask: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
+.marquee__track {
+     display: flex;
+     width: max-content;
+     animation: marquee 70s linear infinite;
+}
+
+.marquee:hover .marquee__track {
+     animation-play-state: paused;
+}
+
+.marquee__run {
+     display: flex;
+}
+
+.marquee__item {
+     font-family: var(--font-display);
+     font-style: italic;
+     font-size: clamp(1.25rem, 3vw, 1.75rem);
+     color: var(--ink-soft);
+     white-space: nowrap;
+     padding-inline: 1.25rem;
+}
+
+.marquee__item::after {
+     content: '✦';
+     font-style: normal;
+     font-size: 0.6em;
+     color: var(--ink-faint);
+     margin-left: 2.5rem;
+     vertical-align: 0.2em;
+}
+
+@keyframes marquee {
+     to {
+          transform: translateX(-50%);
+     }
+}
+
+/* ------------------------------------------------------------------
+   Bridge hand
+------------------------------------------------------------------- */
+.hand {
+     margin-top: 2.5rem;
+}
+
+.hand__suits {
+     display: grid;
+     gap: 0.75rem;
+}
+
+.suit-row {
+     display: flex;
+     align-items: center;
+     gap: 1rem;
+     min-height: 3.25rem;
+}
+
+.suit-row__symbol {
+     flex: none;
+     width: 1.5rem;
+     font-size: 1.6rem;
+     line-height: 1;
+     text-align: center;
+}
+
+.suit-row__cards {
+     display: flex;
+     flex-wrap: wrap;
+     gap: 0.4rem;
+     min-width: 0;
+}
+
+.card {
+     display: inline-grid;
+     place-items: center;
+     min-width: 2.25rem;
+     height: 3.1rem;
+     padding-inline: 0.35rem;
+     font-family: var(--font-display);
+     font-size: 1.35rem;
+     background: var(--card);
+     border: 1px solid var(--line);
+     border-radius: 4px;
+     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+     animation: deal 520ms var(--ease-out) backwards;
+     animation-delay: calc(var(--n) * 35ms);
+     transition: transform var(--dur-fast) var(--ease-out);
+}
+
+@media (hover: hover) {
+     .card:hover {
+          transform: translateY(-4px) rotate(var(--tilt));
+     }
+}
+
+@keyframes deal {
+     from {
+          opacity: 0;
+          transform: translate(-40px, -18px) rotate(-14deg);
+     }
+}
+
+.suit-row__void {
+     font-style: italic;
+     color: var(--ink-faint);
+}
+
+.hand__actions {
+     display: flex;
+     flex-wrap: wrap;
+     gap: 0.5rem 1.5rem;
+     margin-top: 1.75rem;
+}
+
+.text-button {
+     font-family: var(--font-display);
+     font-size: 1.25rem;
+     padding-block: 0.5rem;
+}
+
+.text-button > span {
+     background-image: linear-gradient(var(--highlight), var(--highlight));
+     background-repeat: no-repeat;
+     background-position: 0 85%;
+     background-size: 100% 0.35em;
+     transition: background-size var(--dur) var(--ease-out);
+}
+
+.text-button:hover > span,
+.text-button[aria-expanded='true'] > span {
+     background-size: 100% 0.9em;
+}
+
+.hand__bid {
+     margin-top: 1rem;
+     color: var(--ink-soft);
+     animation: rise var(--dur) var(--ease-out) both;
+}
+
+.hand__bid-call {
+     font-family: var(--font-display);
+     font-weight: 400;
+     font-size: 1.75rem;
+     color: var(--ink);
+     margin-right: 0.35rem;
+     vertical-align: -0.1em;
+}
+
+/* ------------------------------------------------------------------
+   Highlighter mode
+------------------------------------------------------------------- */
+.marker-canvas {
+     position: fixed;
+     inset: 0;
+     z-index: 60;
+     width: 100vw;
+     height: 100vh;
+     pointer-events: none;
+     touch-action: none;
+}
+
+.marker-mode .marker-canvas {
+     pointer-events: auto;
+     cursor: crosshair;
+}
+
+.toast {
+     position: fixed;
+     z-index: 70;
+     left: 50%;
+     bottom: max(1.5rem, env(safe-area-inset-bottom));
+     max-width: calc(100vw - 2rem);
+     padding: 0.6rem 1rem;
+     font-size: 0.95rem;
+     text-align: center;
+     color: var(--paper);
+     background: var(--ink);
+     border-radius: 999px;
+     opacity: 0;
+     transform: translate(-50%, 12px);
+     pointer-events: none;
+     transition: opacity var(--dur) var(--ease-out), transform var(--dur) var(--ease-out);
+}
+
+.toast.is-visible {
+     opacity: 1;
+     transform: translate(-50%, 0);
+}
+
+/* ------------------------------------------------------------------
+   Reveal on scroll. Hidden only once JS has loaded (the html.js class),
+   so the page still reads in full if scripts fail. Plays once.
+------------------------------------------------------------------- */
+.js [data-reveal] {
+     opacity: 0;
+     transform: translateY(24px);
+     transition: opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out);
+     transition-delay: calc(var(--d, 0) * 90ms);
+}
+
+.js [data-reveal].is-visible {
+     opacity: 1;
+     transform: none;
+}
+
+/* ------------------------------------------------------------------
+   Reduced motion: keep every state change, drop the movement.
+------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+     html {
+          scroll-behavior: auto;
+     }
+
+     *,
+     *::before,
+     *::after {
+          animation-duration: 1ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 1ms !important;
+          transition-delay: 0ms !important;
+     }
+
+     .js [data-reveal] {
+          transform: none;
+     }
+
+     .js .photo-frame[data-reveal] {
+          transform: rotate(var(--tilt, 0deg));
+     }
+
+     /* Show the interest band as a still line instead of scrolling it. */
+     .marquee__track {
+          animation: none;
+     }
+}
+
+/* Comfortable tap targets on touch screens without changing the look. */
+@media (hover: none) and (pointer: coarse) {
+     .nav-link,
+     .photo-link {
+          padding-block: 0.65rem;
+     }
+}
